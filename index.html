@@ -1,4 +1,4 @@
-<link rel="manifest" href="/108_bows/app.webmanifest"><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -8,8 +8,8 @@
 <title>108 Verbeugungen</title>
 <meta name="theme-color" content="#0f0e0c">
 <meta name="description" content="Meditative Praxis-App für 108 Verbeugungen.">
-<link rel="manifest" href="app.webmanifest">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="/108_bows/app.webmanifest">
+<link rel="apple-touch-icon" href="/108_bows/icon-192.png">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500&display=swap');
   :root {
@@ -25,7 +25,6 @@
   .screen{display:none;flex-direction:column;height:100%;}
   .screen.active{display:flex;}
 
-  /* SETTINGS */
   .sh{padding:2.5rem 1.75rem 1.25rem;text-align:center;border-bottom:1px solid var(--border);flex-shrink:0;}
   .sh .lotus{font-size:2.4rem;margin-bottom:0.5rem;opacity:0.85;}
   .sh h1{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:600;color:var(--gold2);letter-spacing:0.04em;}
@@ -45,7 +44,6 @@
   .begin-btn:active{background:rgba(212,168,83,0.2);}
   .info-link-btn{width:100%;padding:0.75rem;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text3);font-family:'Jost',sans-serif;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
 
-  /* PRACTICE */
   .pt{padding:1rem 1.25rem 0.9rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;}
   .ib{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;}
   .ib:active{background:var(--bg3);}
@@ -74,7 +72,6 @@
   .bow-btn:active{background:rgba(212,168,83,0.18);}
   .back-btn{width:100%;padding:0.8rem;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:'Jost',sans-serif;font-size:0.95rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
 
-  /* MEDITATION */
   .med-screen{align-items:center;justify-content:center;padding:2.5rem 2rem;text-align:center;gap:2rem;}
   .med-lbl{font-size:0.85rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);}
   .med-num{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold);letter-spacing:0.06em;}
@@ -85,7 +82,6 @@
   .med-new:active{background:rgba(212,168,83,0.15);}
   .med-back{width:100%;padding:0.8rem;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text3);font-family:'Jost',sans-serif;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
 
-  /* DONE */
   .done-s{align-items:center;justify-content:center;padding:2.5rem 2rem;text-align:center;gap:1.75rem;}
   .done-lotus{font-size:4rem;opacity:0.65;}
   .done-title{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:600;color:var(--gold2);line-height:1.25;}
@@ -96,7 +92,6 @@
   .donate-btn:active{background:rgba(212,168,83,0.15);}
   .restart-btn{width:100%;padding:1rem;border-radius:50px;border:1.5px solid var(--border2);background:transparent;color:var(--text2);font-family:'Jost',sans-serif;font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;}
 
-  /* INFO */
   .info-s{overflow-y:auto;}
   .ih{padding:2rem 1.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;}
   .ih h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold2);}
@@ -121,7 +116,6 @@
 <body>
 <div id="app">
 
-  <!-- SETTINGS -->
   <div class="screen active" id="screen-settings">
     <div class="sh">
       <div class="lotus">☸</div>
@@ -179,7 +173,6 @@
     </div>
   </div>
 
-  <!-- PRACTICE -->
   <div class="screen" id="screen-practice">
     <div class="pt">
       <button class="ib" onclick="openSettings()">
@@ -214,12 +207,11 @@
         <div class="stat"><div class="v" id="cnt-left">108</div><div class="l">offen</div></div>
         <div class="stat"><div class="v" id="cnt-pct">0%</div><div class="l">Weg</div></div>
       </div>
-      <button class="bow-btn" id="main-btn" onclick="nextBow()">Verbeuge mich — weiter</button>
+      <button class="bow-btn" id="main-btn" onclick="nextBow()">Weiter</button>
       <button class="back-btn" onclick="prevBow()">Zurück</button>
     </div>
   </div>
 
-  <!-- MEDITATION -->
   <div class="screen med-screen" id="screen-meditation">
     <div class="med-lbl">Reflexion des Augenblicks</div>
     <div class="med-num" id="med-num">Verbeugung 1</div>
@@ -231,19 +223,17 @@
     </div>
   </div>
 
-  <!-- DONE -->
   <div class="screen done-s" id="screen-done">
     <div class="done-lotus">☸</div>
     <div class="done-title">Praxis vollendet</div>
     <div class="done-div"></div>
-    <div class="done-verse">Mögen diese Verbeugungen die Samen für Weisheit und Freiheit für alle Wesen werden.</div>
+    <div class="done-verse">Mögen diese Verbeugungen Samen von Weisheit und Befreiung für alle Wesen sein.</div>
     <div class="done-btns">
       <button class="donate-btn" onclick="showScreen('screen-info')">Unterstütze Vien Lac</button>
       <button class="restart-btn" onclick="resetApp()">Neue Praxis</button>
     </div>
   </div>
 
-  <!-- INFO -->
   <div class="screen info-s" id="screen-info">
     <div class="ih">
       <h2>Über &amp; Spenden</h2>
@@ -252,8 +242,9 @@
     <div class="ib2">
 
       <div class="ic">
-        <div class="ict">Herkunft der Texte</div>
-        <p>Die 108 Reflexionen entstammen der koreanischen Zen-Tradition (선, Seon). Die Texte wurden im Rahmen des <em>Temple Stay</em>-Programms des Jogye-Ordens entwickelt – dem größten buddhistischen Orden Koreas. Sie sind keine Schöpfung einer einzelnen Person, sondern Ausdruck einer lebendigen kollektiven Tradition.</p>
+        <div class="ict">Hinweis zu den Texten</div>
+        <p>Die 108 Reflexionen wurden mir vom Vien-Lac-Kloster zur Verfügung gestellt und basieren auf Texten aus dem koreanischen Temple-Stay-Programm, die über eine englische Fassung ins Deutsche übertragen wurden.</p>
+        <p>Diese Version wurde mithilfe von ChatGPT (OpenAI) nach bestem Wissen und Gewissen sprachlich und inhaltlich überarbeitet, mit dem Ziel, die ursprüngliche Bedeutung klarer und für die Praxis tragfähig wiederzugeben.</p>
       </div>
 
       <div class="ic">
@@ -276,7 +267,7 @@
 
       <div class="ic">
         <div class="ict">Diese App</div>
-        <p>Zur persönlichen Unterstützung der Praxis erstellt. Die Texte wurden aus einer deutschen Übersetzung des koreanischen Temple-Stay-Programms übernommen und sprachlich überarbeitet.</p>
+        <p>Zur persönlichen Unterstützung der Praxis erstellt.</p>
       </div>
 
     </div>
@@ -288,114 +279,114 @@
 </div>
 <script>
 const ALL_BOWS = [
-  [1,"Für tiefen Respekt für alles Leben, verbeuge ich mich."],
-  [2,"Für Bescheidenheit und die Befreiung von schlechten Gewohnheiten, verbeuge ich mich."],
-  [3,"Um mich vom egoistischen Verhalten für Eigennutzen zu erlösen, verbeuge ich mich."],
+  [1,"Aus tiefem Respekt vor allem Leben verbeuge ich mich."],
+  [2,"Um Bescheidenheit zu kultivieren und mich von schlechten Gewohnheiten zu lösen, verbeuge ich mich."],
+  [3,"Um mich von egoistischem Verhalten zum eigenen Vorteil zu lösen, verbeuge ich mich."],
   [4,"Für die Einsicht, dass du und ich gleichermaßen wertvoll sind, verbeuge ich mich."],
-  [5,"Um die in mir stets entstehende Gier zu verwandeln, verbeuge ich mich."],
-  [6,"Für die Geduld gegenüber der Wut im Geiste, verbeuge ich mich."],
-  [7,"Um auf mein gesamtes Leben mit ganzem Herzen zurückblicken zu können, verbeuge ich mich."],
-  [8,"Um mein wahres Ich zu finden und mein inneres Wachstum zu fördern, verbeuge ich mich."],
-  [9,"Um den verblendeten Verstand loszulassen und Weisheit in mir wachsen zu sehen, verbeuge ich mich."],
-  [10,"Ich bin dankbar, geduldig auf dem schwierigen Weg des Lebens zu gehen, und verbeuge mich."],
-  [11,"Ich bin dankbar, mich vom Unheilsamen zu distanzieren und mich mit dem Heilsamen anzufreunden, und verbeuge mich."],
-  [12,"Um mich bei allen Begegnungen zu bedanken, die mich zu dem gemacht haben, was ich heute bin, verbeuge ich mich."],
-  [13,"Um mich für die grenzenlose Liebe meiner Eltern zu bedanken, verbeuge ich mich."],
+  [5,"Um die in mir immer wieder entstehende Gier zu verwandeln, verbeuge ich mich."],
+  [6,"Für Geduld gegenüber der Wut in meinem Geist verbeuge ich mich."],
+  [7,"Um mit offenem Herzen auf mein ganzes Leben zurückzuschauen, verbeuge ich mich."],
+  [8,"Um mein wahres Selbst zu erkennen und mein inneres Wachstum zu fördern, verbeuge ich mich."],
+  [9,"Um den verblendeten Geist loszulassen und Weisheit in mir wachsen zu lassen, verbeuge ich mich."],
+  [10,"Ich bin dankbar, wenn es mir gelingt, den schwierigen Weg des Lebens geduldig zu gehen, und verbeuge mich."],
+  [11,"Ich bin dankbar, mich vom Unheilsamen zu distanzieren und mich dem Heilsamen zuzuwenden, und verbeuge mich."],
+  [12,"Um mich für alle Begegnungen zu bedanken, die es möglich gemacht haben, was ich heute bin, verbeuge ich mich."],
+  [13,"Um mich für die endlose Liebe meiner Eltern zu bedanken, verbeuge ich mich."],
   [14,"Um allen Lehrern zu danken, die mich zur Wahrheit geführt haben, verbeuge ich mich."],
-  [15,"Um meinen Freunden und Weggefährten zu danken, mit denen ich schwierige Zeiten geteilt habe, verbeuge ich mich."],
+  [15,"Um meinen Freunden und Kollegen zu danken, mit denen ich schwierige Zeiten geteilt habe, verbeuge ich mich."],
   [16,"Um meinen Vorfahren zu danken, denen ich meine Existenz verdanke, verbeuge ich mich."],
-  [17,"Um der unendlichen Gnade der Luft, des Wassers, der Natur und des Universums zu danken, die die Quellen des Lebens sind, verbeuge ich mich."],
-  [18,"Ich betrachte, ob meine maßlose Gier Unglück hervorgerufen hat, und verbeuge mich."],
-  [19,"Ich betrachte, ob meine besitzergreifende Liebe zu jemandem Leiden verursacht hat, und verbeuge mich."],
-  [20,"Ich betrachte, ob ich jemanden durch selbstgerechten Stolz verärgert habe, und verbeuge mich."],
-  [21,"Ich betrachte, ob ich jemandem durch blinde Gier geschadet habe, und verbeuge mich."],
-  [22,"Ich betrachte, ob ich jemanden falsch verstanden habe, und verbeuge mich."],
-  [23,"Ich betrachte, ob ich jemanden verletzt habe, während ich meinen eigenen Willen verfolgte, und verbeuge mich."],
-  [24,"Ich betrachte, ob ich in unnötigem Luxus und Eitelkeit gelebt habe, und verbeuge mich."],
-  [25,"Ich betrachte, ob ich verschwendet habe, was hätte bewahrt werden können, und verbeuge mich."],
-  [26,"Ich betrachte, ob ich unheilsames Verhalten stets rationalisiert habe, und verbeuge mich."],
-  [27,"Ich betrachte, ob ich Versprechen leichtfertig gebrochen habe, und verbeuge mich."],
-  [28,"Ich betrachte, ob ich reuevoll in die Vergangenheit zurückgeschaut habe und mich durch das Festhalten daran gequält habe, und verbeuge mich."],
-  [29,"Ich betrachte, ob mich die Angst vor der Zukunft eingeschränkt hat, und verbeuge mich."],
-  [30,"Ich betrachte, ob ich die Würde eines anderen verletzt habe, um meine eigene zu schützen, und verbeuge mich."],
-  [31,"Ich betrachte, ob ich nur das Negative gesehen und das Positive übersehen habe, und verbeuge mich."],
-  [32,"Ich betrachte, ob ich aus Angst Schwierigkeiten nicht lösen konnte, und verbeuge mich."],
-  [33,"Ich weiß, dass durch aufrichtige Bemühungen alles erreicht werden kann, und verbeuge mich."],
-  [34,"Ich pflege Selbstliebe und betrachte mich wie ein kostbares Juwel, und verbeuge mich."],
-  [35,"Um zu geben, ohne etwas als Gegenleistung zu erwarten, verbeuge ich mich."],
-  [36,"Ich weiß, dass Unglück und Angst kommen und gehen, und verbeuge mich."],
-  [37,"Ich weiß, dass jeder Tag ein schöner Tag ist, erfüllt von guten Menschen und guten Begegnungen, und verbeuge mich."],
+  [17,"Um der unermesslichen Gnade von Luft, Wasser, Natur und Universum, den Quellen des Lebens, zu danken, verbeuge ich mich."],
+  [18,"Ich prüfe, ob meine maßlose Gier Unglück hervorgerufen hat, und verbeuge mich."],
+  [19,"Ich prüfe, ob meine anhaftende Liebe anderen Leid verursacht hat, und verbeuge mich."],
+  [20,"Ich prüfe, ob ich aus selbstgerechtem Stolz andere verärgert habe, und verbeuge mich."],
+  [21,"Ich prüfe, ob ich aus blinder Gier anderen geschadet habe, und verbeuge mich."],
+  [22,"Ich prüfe, ob ich jemanden falsch verstanden habe, und verbeuge mich."],
+  [23,"Ich prüfe, ob ich andere verletzt habe, während ich meinen eigenen Willen verfolgt habe, und verbeuge mich."],
+  [24,"Ich prüfe, ob ich in unnötigem Luxus und in Eitelkeit gelebt habe, und verbeuge mich."],
+  [25,"Ich prüfe, ob ich verschwendet habe, was man hätte sparen können, und verbeuge mich."],
+  [26,"Ich prüfe, ob ich unheilsames Verhalten rationalisiert habe, und verbeuge mich."],
+  [27,"Ich prüfe, ob ich Versprechen leicht gebrochen habe, und verbeuge mich."],
+  [28,"Ich prüfe, ob ich stets reuevoll auf die Vergangenheit zurückgeschaut und mich durch Festhalten an ihr gequält habe, und verbeuge mich."],
+  [29,"Ich prüfe, ob ich mich aus Angst vor der Zukunft eingeschränkt habe, und verbeuge mich."],
+  [30,"Ich prüfe, ob ich die Ehre eines anderen verletzt habe, um meine eigene zu schützen, und verbeuge mich."],
+  [31,"Ich prüfe, ob ich nur das Negative gesehen und das Positive vernachlässigt habe, und verbeuge mich."],
+  [32,"Ich prüfe, ob ich aus Angst Schwierigkeiten nicht lösen konnte, und verbeuge mich."],
+  [33,"Ich weiß, dass durch große Bemühungen alles erreicht werden kann, und verbeuge mich."],
+  [34,"Ich kultiviere Selbstliebe und erkenne mich als kostbares Juwel, und verbeuge mich."],
+  [35,"Um zu geben, ohne etwas im Gegenzug zu erwarten, verbeuge ich mich."],
+  [36,"Ich weiß, dass Unglück und Angst entstehen und vergehen, und verbeuge mich."],
+  [37,"Ich weiß, dass jeder Tag ein guter Tag ist, erfüllt von guten Menschen und guten Ereignissen, und verbeuge mich."],
   [38,"Im Wissen, dass man erntet, was man sät, bemühe ich mich, nur gute Samen zu säen, und verbeuge mich."],
-  [39,"Um bescheiden anzunehmen, was gesät wurde, verbeuge ich mich."],
-  [40,"Um stets mein Bestes zu geben, auch wenn es scheinbar unbedeutend ist, verbeuge ich mich."],
-  [41,"Um zufrieden zu sein mit einem Leben aus Fleiß und Ehrlichkeit, verbeuge ich mich."],
+  [39,"Um bescheiden zu akzeptieren, was gesät wurde, verbeuge ich mich."],
+  [40,"Um stets mein Bestes zu geben, auch wenn es vermeintlich nicht von Bedeutung ist, verbeuge ich mich."],
+  [41,"Um zufrieden zu sein mit einem Leben harter Arbeit und Ehrlichkeit, verbeuge ich mich."],
   [42,"Um auch die kleinsten Versprechen einzuhalten, verbeuge ich mich."],
-  [43,"Um stets den Weg der Wahrheit zu gehen, auch angesichts von Tadel und Verachtung, verbeuge ich mich."],
-  [44,"Um als warmherziger Mensch zu leben, ohne die Überzeugungen anderer zu verurteilen, verbeuge ich mich."],
-  [45,"Um im gegenwärtigen Moment zu leben, ohne an Vergangenheit oder Zukunft gebunden zu sein, verbeuge ich mich."],
-  [46,"Für Mitgefühl mit allen fühlenden Wesen, nicht nur mit meiner eigenen Familie, verbeuge ich mich."],
-  [47,"Für ein Herz, das andere mit Wärme umfängt, verbeuge ich mich."],
-  [48,"Um bei der Arbeit stets leidenschaftlich tätig zu sein und nicht aufzuschieben, was getan werden muss, verbeuge ich mich."],
-  [49,"Um das Beste aus jedem Augenblick zu machen, ohne Zeit zu verschwenden, verbeuge ich mich."],
-  [50,"Um ohne Trägheit auf mein Ziel hinzuwirken, verbeuge ich mich."],
-  [51,"Um Fehler ohne Selbstgerechtigkeit einzugestehen, verbeuge ich mich."],
+  [43,"Um stets auf dem Weg der Wahrheit zu gehen, auch bei Tadel und Verachtung, verbeuge ich mich."],
+  [44,"Um als warmherziger Mensch zu leben, ohne die unterschiedlichen Überzeugungen anderer zu verurteilen, verbeuge ich mich."],
+  [45,"Um im Moment zu leben, ohne an Vergangenheit oder Zukunft gebunden zu sein, verbeuge ich mich."],
+  [46,"Für Mitgefühl gegenüber allen fühlenden Lebewesen, statt mich nur um meine eigene Familie zu kümmern, verbeuge ich mich."],
+  [47,"Für ein Herz, das andere mit Wärme umarmt, verbeuge ich mich."],
+  [48,"Um stets bei der Arbeit leidenschaftlich zu arbeiten, ohne zu verzögern, was getan werden muss, verbeuge ich mich."],
+  [49,"Um aus jedem Moment das Bestmögliche zu machen, ohne Zeit zu verschwenden, verbeuge ich mich."],
+  [50,"Um ohne Trägheit auf das Ziel zuzugehen, verbeuge ich mich."],
+  [51,"Um Fehler ohne Selbstgerechtigkeit zuzugeben, verbeuge ich mich."],
   [52,"Um Schwierigkeiten nicht aus dem Weg zu gehen, verbeuge ich mich."],
   [53,"Um mich neuen Herausforderungen zu stellen, anstatt mich auszuruhen, verbeuge ich mich."],
   [54,"Um meine Fehler sofort einzugestehen, verbeuge ich mich."],
-  [55,"Um offenherzig zu sein und in freudigen Momenten des Lebens von Herzen lachen zu können, verbeuge ich mich."],
-  [56,"Um allen Trost zu spenden, denen ich auf meinem Weg begegne, verbeuge ich mich."],
-  [57,"Um von ganzem Herzen an Gemeinschaften teilzunehmen, die fühlenden Wesen helfen, verbeuge ich mich."],
-  [58,"Um in einer Welt des Chaos klar und in Frieden zu sein, verbeuge ich mich."],
-  [59,"Um in Herausforderungen und Krisen den Weg zur Freude zu finden, verbeuge ich mich."],
-  [60,"Um bei Schwierigkeiten stark und konzentriert auf meine Ziele zu bleiben, verbeuge ich mich."],
-  [61,"Um Aufgaben anzunehmen, so wie sie gegeben sind, verbeuge ich mich."],
-  [62,"Um wahre und vertrauensvolle Freundschaft zu teilen, ohne etwas als Gegenleistung zu erwarten, verbeuge ich mich."],
-  [63,"Um Ungerechtigkeit ohne Ärger anzunehmen und mich selbst zu hinterfragen, verbeuge ich mich."],
-  [64,"Um eine Krankheit als Heilmittel zu betrachten, das mir die Gelegenheit gibt, meine Praxis zu vertiefen, verbeuge ich mich."],
+  [55,"Um offenherzig zu sein und in glücklichen Momenten im Leben lachen zu können, verbeuge ich mich."],
+  [56,"Um allen Trost zu spenden, denen ich begegne, verbeuge ich mich."],
+  [57,"Um aus vollem Herzen an Handlungen teilzunehmen, die allen fühlenden Wesen helfen, verbeuge ich mich."],
+  [58,"Um in einer Welt des trüben Chaos klar und in Frieden zu sein, verbeuge ich mich."],
+  [59,"Um in Herausforderungen und Krisen den Weg der Freude zu finden, verbeuge ich mich."],
+  [60,"Um bei Schwierigkeiten stark zu bleiben und meine Ziele klar im Blick zu behalten, verbeuge ich mich."],
+  [61,"Um Aufgaben so anzunehmen, wie sie mir gegeben sind, verbeuge ich mich."],
+  [62,"Um wahre und vertrauensvolle Freundschaften zu teilen, ohne etwas im Gegenzug zu erwarten, verbeuge ich mich."],
+  [63,"Um Ungerechtigkeit ohne Ärger zu akzeptieren und mich selbst zu reflektieren, verbeuge ich mich."],
+  [64,"Um Krankheit als Medizin zu sehen, als Gelegenheit, meine Praxis zu stärken, verbeuge ich mich."],
   [65,"Um dankbar und gütig zu sein, indem ich Hass und Neid loslasse, verbeuge ich mich."],
-  [66,"Um stets in Freude zu leben und nicht in Trostlosigkeit und Einsamkeit zu verharren, verbeuge ich mich."],
-  [67,"Um gelassen und in Frieden zu leben, frei von Unruhe und Angst, verbeuge ich mich."],
+  [66,"Um stets in Freude zu leben und nicht trostlos und einsam zu sein, verbeuge ich mich."],
+  [67,"Um gelassen und in Frieden zu leben, ohne Unruhe und Angst, verbeuge ich mich."],
   [68,"Um Krisenmomente mit Mitgefühl zu betrachten, verbeuge ich mich."],
   [69,"Um unerwartetem Unglück mit Akzeptanz zu begegnen, verbeuge ich mich."],
-  [70,"Durch das Erkennen der Vergänglichkeit von Macht und Reichtum sehe ich deren Bedeutungslosigkeit, leide nicht darunter, und verbeuge mich."],
-  [71,"Um anderen mit einfühlsamen und rücksichtsvollen Taten zu helfen, verbeuge ich mich."],
-  [72,"Um neuen Menschen auf aufrichtige und bedeutsame Weise ohne Vorurteile zu begegnen, verbeuge ich mich."],
-  [73,"Um mit allen in Harmonie zu wirken und niemanden auszuschließen, verbeuge ich mich."],
+  [70,"Durch die Einsicht in die Vergänglichkeit von Macht und Wohlstand erkenne ich deren Bedeutungslosigkeit und brauche nicht darunter zu leiden, und verbeuge mich."],
+  [71,"Um anderen mit gefühlvollen und rücksichtsvollen Handlungen zu helfen, verbeuge ich mich."],
+  [72,"Um neuen Menschen auf eine wahre und bedeutsame Weise ohne Vorurteile zu begegnen, verbeuge ich mich."],
+  [73,"Um mit allen in Harmonie zu arbeiten und niemanden auszuschließen, verbeuge ich mich."],
   [74,"Um mit allen in Harmonie und Einklang zu leben, verbeuge ich mich."],
-  [75,"Um mir Ruhm für andere zu wünschen, anstatt für mich selbst, verbeuge ich mich."],
-  [76,"Um meine Fähigkeiten und Talente mit denen in Not zu teilen, verbeuge ich mich."],
-  [77,"Um die Zeit zu schätzen, die ich mit einem geliebten Menschen verbracht habe, auch wenn dieser Mensch mich verlassen hat, verbeuge ich mich."],
+  [75,"Um anderen Ruhm zu wünschen statt mir selbst, verbeuge ich mich."],
+  [76,"Um meine Fähigkeiten mit anderen in Not zu teilen, verbeuge ich mich."],
+  [77,"Um die Zeit zu schätzen, die ich mit einem geliebten Menschen verbracht habe, auch wenn diese Person mich verlassen hat, verbeuge ich mich."],
   [78,"Um alle Wesen ohne Vorurteile zu sehen, verbeuge ich mich."],
   [79,"Um verschiedenen Meinungen aufmerksam zuzuhören, verbeuge ich mich."],
-  [80,"Um in Frieden, Harmonie und Rücksicht gegenüber meinen Nächsten zu sein, verbeuge ich mich."],
-  [81,"Um loslassen zu können, wenn die Zeit dafür gekommen ist, verbeuge ich mich."],
-  [82,"Um mein Leben ohne Selbstvorwürfe anzunehmen, verbeuge ich mich."],
-  [83,"Um zu geben, was ich geben kann, wohin ich auch gehe, ohne etwas als Gegenleistung zu erwarten, verbeuge ich mich."],
-  [84,"Um ein Mensch zu werden, der mit warmen Worten Frieden verbreitet, verbeuge ich mich."],
+  [80,"Um friedlich, harmonisch und rücksichtsvoll gegenüber meinen Mitmenschen zu sein, verbeuge ich mich."],
+  [81,"Um loslassen zu können, wenn es Zeit wird, verbeuge ich mich."],
+  [82,"Um mein Leben ohne Selbstvorwurf zu respektieren, verbeuge ich mich."],
+  [83,"Um zu tun, was ich kann, wo ich auch bin, ohne etwas im Gegenzug zu erwarten, verbeuge ich mich."],
+  [84,"Um mit warmen Worten Frieden zu verbreiten, verbeuge ich mich."],
   [85,"Um unter Druck gelassen zu bleiben, verbeuge ich mich."],
-  [86,"Um bei Auseinandersetzungen ruhig zu bleiben, verbeuge ich mich."],
-  [87,"Um Selbstgerechtigkeit zu meiden und nicht nach Fehlern in anderen zu suchen, verbeuge ich mich."],
-  [88,"Um andere mit Lob zu ermutigen, anstatt mit Tadel, verbeuge ich mich."],
-  [89,"Um in anderen das Gute statt das Schlechte zu suchen und ihnen Erfolg zu wünschen, verbeuge ich mich."],
-  [90,"Ich widme meine Verdienste dem Glück anderer und weiß, dass ihr Leiden auch mein Leiden ist, und verbeuge mich."],
-  [91,"Um das Scheitern eines anderen mitfühlend zu begleiten und dem Erfolg eines anderen aufrichtig zu gratulieren, verbeuge ich mich."],
-  [92,"Mögen alle Kranken von Krankheit befreit sein."],
-  [93,"Mögen alle, die ihren Weg verloren haben, ihn wiederfinden."],
-  [94,"Mögen alle, die in Armut leben, diese überwinden."],
-  [95,"Mögen alle Wesen frei sein von Hunger, Krankheit und Krieg."],
+  [86,"Um bei Konfrontationen ruhig zu bleiben, verbeuge ich mich."],
+  [87,"Um Selbstgerechtigkeit zu vermeiden und nicht nach Fehlern in anderen zu suchen, verbeuge ich mich."],
+  [88,"Um andere mit Lob zu ermutigen statt mit Tadel, verbeuge ich mich."],
+  [89,"Um in anderen das Gute zu sehen und ihnen Erfolg zu wünschen, verbeuge ich mich."],
+  [90,"Ich widme meine Verdienste dem Glück aller Wesen und verbeuge mich."],
+  [91,"Um das Scheitern anderer zu betrauern und mich über ihren Erfolg zu freuen, verbeuge ich mich."],
+  [92,"Mögen alle Kranken frei von Krankheit sein."],
+  [93,"Mögen alle, die verloren sind, ihren Weg finden."],
+  [94,"Mögen alle Armen ihre Not überwinden."],
+  [95,"Mögen alle Wesen frei von Hunger, Krankheit und Krieg sein."],
   [96,"Mögen alle Wesen durch aufrichtige Lehrer in Weisheit wachsen."],
-  [97,"Mögen alle Wesen den richtigen Halt in Arbeit und Gemeinschaft finden."],
-  [98,"Mögen alle Wesen in Geborgenheit und in der Harmonie ihrer Familien leben."],
-  [99,"Mögen alle heilsamen Absichten und heilsamen Bemühungen aller Wesen erfüllt werden."],
-  [100,"Mögen alle Menschen, die Arbeit suchen, einen erfüllenden und heilsamen rechten Lebenserwerb finden."],
-  [101,"Möge die Jugend und alle kommenden Generationen einen Weg zur wahren Glückseligkeit finden."],
-  [102,"Ich spüre die Gnade des Universums in einem einzigen Wassertropfen, und verbeuge mich."],
-  [103,"Ich sehe den Fleiß von Millionen Menschen in einem einzigen Reiskorn, und verbeuge mich."],
-  [104,"Ich überbrücke die dünne Wand zwischen dir und mir und werde zu einem offenherzigen Menschen, und verbeuge mich."],
-  [105,"Ich bin dankbar für das tiefe Glücksgefühl in diesem Augenblick der Verbeugung, und verbeuge mich."],
-  [106,"Für die wahre Natur, die aus der Tiefe des Inneren leuchtet, verbeuge ich mich."],
-  [107,"Für die wahre Natur, die von allen Wesen ausstrahlt, verbeuge ich mich."],
-  [108,"Ich wünsche mir, dass meine 108 Verbeugungen die Samen für Weisheit und Freiheit für alle Wesen werden, und verbeuge mich."]
+  [97,"Mögen alle Wesen einen guten Weg in Arbeit und Gemeinschaft finden."],
+  [98,"Mögen alle Wesen in Geborgenheit und Harmonie leben."],
+  [99,"Mögen alle heilsamen Absichten und Bemühungen aller Wesen erfüllt werden."],
+  [100,"Mögen alle Menschen einen rechten und erfüllenden Lebenserwerb finden."],
+  [101,"Mögen die kommenden Generationen den Weg zu wahrem Glück finden."],
+  [102,"Ich erkenne in einem Tropfen Wasser die Gnade des Universums und verbeuge mich."],
+  [103,"Ich erkenne in einem Reiskorn die Mühe unzähliger Wesen und verbeuge mich."],
+  [104,"Ich überwinde die Trennung zwischen dir und mir und verbeuge mich."],
+  [105,"Ich bin dankbar für das überwältigende Glück dieses Augenblicks der Verbeugung und verbeuge mich."],
+  [106,"Für die wahre Natur, die aus meinem Inneren hervorleuchtet, verbeuge ich mich."],
+  [107,"Für die wahre Natur, die von allen Wesen ausgeht, verbeuge ich mich."],
+  [108,"Mögen diese 108 Verbeugungen Samen von Weisheit und Befreiung für alle Wesen sein. Dafür verbeuge ich mich."]
 ];
 
 let state={mode:'full',pace:'manual',gong:false,timerSec:20,startFrom:1,count:18,sequence:[],pos:0,autoTimer:null,autoRemaining:0};
@@ -526,7 +517,7 @@ function resetApp(){state.pos=0;document.getElementById('start-slider').value=1;
 <script>
 if ('serviceWorker' in navigator && !location.protocol.startsWith('file')) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    navigator.serviceWorker.register('/108_bows/sw.js').catch(() => {});
   });
 }
 </script>
