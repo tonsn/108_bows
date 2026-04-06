@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>108 Verbeugungen</title>
+<meta name="theme-color" content="#0f0e0c">
+<meta name="description" content="Meditative Praxis-App für 108 Verbeugungen.">
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500&display=swap');
+  :root {
+    --bg:#0f0e0c; --bg2:#1e1c19; --bg3:#2c2a26;
+    --gold:#d4a853; --gold2:#f0d898;
+    --text:#f5efe0; --text2:#c8b888; --text3:#8a7e6a;
+    --border:rgba(212,168,83,0.22); --border2:rgba(212,168,83,0.5);
+    --radius:18px; --radius-sm:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:400;overflow:hidden;}
+  #app{height:100%;display:flex;flex-direction:column;max-width:520px;margin:0 auto;}
+  .screen{display:none;flex-direction:column;height:100%;}
+  .screen.active{display:flex;}
+
+  /* SETTINGS */
+  .sh{padding:2.5rem 1.75rem 1.25rem;text-align:center;border-bottom:1px solid var(--border);flex-shrink:0;}
+  .sh .lotus{font-size:2.4rem;margin-bottom:0.5rem;opacity:0.85;}
+  .sh h1{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:600;color:var(--gold2);letter-spacing:0.04em;}
+  .sh p{font-size:1rem;color:var(--text2);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.3rem;}
+  .sb{flex:1;overflow-y:auto;padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:1rem;}
+  .sc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem;}
+  .sc .lbl{font-size:0.9rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;}
+  .pg{display:flex;gap:10px;flex-wrap:wrap;}
+  .pill{flex:1;min-width:100px;padding:13px 14px;border-radius:50px;border:1.5px solid var(--border2);background:transparent;color:var(--text2);font-family:'Jost',sans-serif;font-size:1rem;font-weight:400;cursor:pointer;text-align:center;transition:all 0.2s;}
+  .pill.selected{background:var(--gold);color:#1a1612;border-color:var(--gold);font-weight:500;}
+  .sr{display:flex;align-items:center;gap:14px;}
+  .sr input[type=range]{flex:1;-webkit-appearance:none;height:3px;background:var(--bg3);border-radius:2px;outline:none;}
+  .sr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--gold);cursor:pointer;}
+  .sv{font-size:1.05rem;font-weight:500;color:var(--gold2);min-width:42px;text-align:right;}
+  .sf{padding:0.75rem 1.5rem 1.5rem;display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+  .begin-btn{width:100%;padding:1.15rem;border-radius:50px;border:1.5px solid var(--gold);background:transparent;color:var(--gold2);font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;letter-spacing:0.08em;cursor:pointer;}
+  .begin-btn:active{background:rgba(212,168,83,0.2);}
+  .info-link-btn{width:100%;padding:0.75rem;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text3);font-family:'Jost',sans-serif;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+
+  /* PRACTICE */
+  .pt{padding:1rem 1.25rem 0.9rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;}
+  .ib{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .ib:active{background:var(--bg3);}
+  .bi{text-align:center;}
+  .bnb{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--gold);letter-spacing:0.04em;}
+  .btl{font-size:0.9rem;color:var(--text3);letter-spacing:0.08em;}
+  .ptrack{height:2px;background:rgba(255,255,255,0.05);flex-shrink:0;}
+  .pfill{height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width 0.5s ease;}
+  .pm{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.75rem 1rem;text-align:center;overflow:hidden;position:relative;}
+  .on{font-size:0.86rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);margin-bottom:1.1rem;}
+  .br{font-family:'Cormorant Garamond',serif;font-size:clamp(1.85rem,4.7vw,2.15rem);font-weight:600;line-height:1.7;color:var(--text);font-style:normal;letter-spacing:0.01em;max-width:34ch;text-wrap:balance;text-shadow:0 1px 0 rgba(0,0,0,0.18);}
+  .bow-shell{width:100%;max-width:440px;padding:1.25rem 1.15rem;border-radius:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));border:1px solid rgba(212,168,83,0.1);box-shadow:0 10px 30px rgba(0,0,0,0.12);}
+  .br.fade-in{animation:fadeBow 380ms ease;}
+  @keyframes fadeBow{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .rw{margin-top:1.75rem;display:none;justify-content:center;}
+  .rw.visible{display:flex;}
+  .tsv{transform:rotate(-90deg);}
+  .rtrack{fill:none;stroke:var(--bg3);stroke-width:4;}
+  .rarc{fill:none;stroke:var(--gold);stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 1s linear;}
+  .pb2{padding:0.75rem 1.5rem 2.25rem;display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+  .strow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:0.2rem;opacity:0.82;}
+  .stat{background:rgba(255,255,255,0.02);border:1px solid rgba(212,168,83,0.12);border-radius:var(--radius-sm);padding:9px 8px;text-align:center;}
+  .stat .v{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;color:var(--gold2);}
+  .stat .l{font-size:0.72rem;font-weight:500;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+  .bow-btn{width:100%;padding:1.1rem;border-radius:50px;border:1.5px solid var(--gold);background:transparent;color:var(--gold2);font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:500;letter-spacing:0.04em;cursor:pointer;}
+  .bow-btn:active{background:rgba(212,168,83,0.18);}
+  .back-btn{width:100%;padding:0.8rem;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:'Jost',sans-serif;font-size:0.95rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+
+  /* MEDITATION */
+  .med-screen{align-items:center;justify-content:center;padding:2.5rem 2rem;text-align:center;gap:2rem;}
+  .med-lbl{font-size:0.85rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);}
+  .med-num{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold);letter-spacing:0.06em;}
+  .med-text{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:500;font-style:italic;line-height:1.6;color:var(--text);max-width:380px;}
+  .med-div{width:40px;height:1px;background:var(--gold);opacity:0.4;}
+  .med-btns{display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px;}
+  .med-new{width:100%;padding:1.1rem;border-radius:50px;border:1.5px solid var(--gold);background:transparent;color:var(--gold2);font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;cursor:pointer;}
+  .med-new:active{background:rgba(212,168,83,0.15);}
+  .med-back{width:100%;padding:0.8rem;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text3);font-family:'Jost',sans-serif;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+
+  /* DONE */
+  .done-s{align-items:center;justify-content:center;padding:2.5rem 2rem;text-align:center;gap:1.75rem;}
+  .done-lotus{font-size:4rem;opacity:0.65;}
+  .done-title{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:600;color:var(--gold2);line-height:1.25;}
+  .done-div{width:60px;height:1.5px;background:var(--gold);opacity:0.5;}
+  .done-verse{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:500;font-style:italic;color:var(--text2);line-height:1.65;max-width:340px;}
+  .done-btns{display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px;}
+  .donate-btn{width:100%;padding:1rem;border-radius:50px;border:1.5px solid var(--gold);background:transparent;color:var(--gold2);font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;letter-spacing:0.06em;cursor:pointer;}
+  .donate-btn:active{background:rgba(212,168,83,0.15);}
+  .restart-btn{width:100%;padding:1rem;border-radius:50px;border:1.5px solid var(--border2);background:transparent;color:var(--text2);font-family:'Jost',sans-serif;font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;}
+
+  /* INFO */
+  .info-s{overflow-y:auto;}
+  .ih{padding:2rem 1.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;}
+  .ih h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold2);}
+  .close-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .ib2{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1.5rem;}
+  .ic{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;display:flex;flex-direction:column;gap:0.75rem;}
+  .ic .ict{font-size:0.85rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);}
+  .ic p{font-size:1.05rem;line-height:1.7;color:var(--text2);}
+  .ic a{color:var(--gold2);text-decoration:underline;text-underline-offset:3px;}
+  .dc{background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--radius);padding:1.4rem;display:flex;flex-direction:column;gap:0.75rem;text-align:center;}
+  .dc .dcl{font-size:1.8rem;opacity:0.7;}
+  .dc .dct{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--gold2);}
+  .dc p{font-size:1.05rem;line-height:1.7;color:var(--text2);}
+  .dc a{color:var(--gold2);text-decoration:underline;text-underline-offset:3px;}
+  .dc .dcn{font-size:0.9rem;color:var(--text3);font-style:italic;}
+  .iban-box{margin-top:0.5rem;background:var(--bg3);border-radius:12px;padding:1rem;text-align:left;}
+  .iban-box .iban-lbl{font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;font-weight:500;}
+  .iban-box p{font-size:1rem;color:var(--text);line-height:1.9;}
+  .if2{padding:1rem 1.5rem 2rem;flex-shrink:0;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- SETTINGS -->
+  <div class="screen active" id="screen-settings">
+    <div class="sh">
+      <div class="lotus">☸</div>
+      <h1>108 Verbeugungen</h1>
+      <p>Buddhistische Praxis</p>
+    </div>
+    <div class="sb">
+      <div class="sc">
+        <div class="lbl">Modus</div>
+        <div class="pg">
+          <button class="pill selected" data-group="mode" data-val="full">Alle 108</button>
+          <button class="pill" data-group="mode" data-val="short">Kurze Praxis</button>
+          <button class="pill" data-group="mode" data-val="single">Meditation</button>
+        </div>
+      </div>
+      <div class="sc" id="count-card" style="display:none;">
+        <div class="lbl">Anzahl der Verbeugungen</div>
+        <div class="sr">
+          <input type="range" id="count-slider" min="6" max="54" step="6" value="18">
+          <span class="sv" id="count-label">18</span>
+        </div>
+      </div>
+      <div class="sc" id="pace-card">
+        <div class="lbl">Ablauf</div>
+        <div class="pg">
+          <button class="pill selected" data-group="pace" data-val="manual">Manuell</button>
+          <button class="pill" data-group="pace" data-val="auto">Timer</button>
+        </div>
+      </div>
+      <div class="sc" id="timer-card" style="display:none;">
+        <div class="lbl">Sekunden pro Verbeugung</div>
+        <div class="sr">
+          <input type="range" id="timer-slider" min="5" max="60" step="5" value="20">
+          <span class="sv" id="timer-label">20s</span>
+        </div>
+      </div>
+      <div class="sc" id="gong-card">
+        <div class="lbl">Gong</div>
+        <div class="pg">
+          <button class="pill" data-group="gong" data-val="on">An</button>
+          <button class="pill selected" data-group="gong" data-val="off">Aus</button>
+        </div>
+      </div>
+      <div class="sc" id="start-card">
+        <div class="lbl">Starten ab (bei Unterbrechung)</div>
+        <div class="sr">
+          <input type="range" id="start-slider" min="1" max="108" step="1" value="1">
+          <span class="sv" id="start-label">1</span>
+        </div>
+      </div>
+    </div>
+    <div class="sf">
+      <button class="begin-btn" onclick="startPractice()">Praxis beginnen</button>
+      <button class="info-link-btn" onclick="showScreen('screen-info')">Über diese App &amp; Spenden</button>
+    </div>
+  </div>
+
+  <!-- PRACTICE -->
+  <div class="screen" id="screen-practice">
+    <div class="pt">
+      <button class="ib" onclick="openSettings()">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line x1="2" y1="4" x2="14" y2="4"/><line x1="2" y1="8" x2="14" y2="8"/><line x1="2" y1="12" x2="14" y2="12"/>
+        </svg>
+      </button>
+      <div class="bi">
+        <div class="bnb" id="bow-counter">1</div>
+        <div class="btl" id="bow-total-label">von 108</div>
+      </div>
+      <button class="ib" onclick="nextBow()">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6,3 11,8 6,13"/>
+        </svg>
+      </button>
+    </div>
+    <div class="ptrack"><div class="pfill" id="progress-fill" style="width:0%"></div></div>
+    <div class="pm">
+      <div class="on" id="original-num">Verbeugung 1</div>
+      <div class="bow-shell"><div class="br" id="bow-text"></div></div>
+      <div class="rw" id="ring-wrap">
+        <svg class="tsv" width="76" height="76" viewBox="0 0 76 76">
+          <circle class="rtrack" cx="38" cy="38" r="34"/>
+          <circle class="rarc" id="ring-arc" cx="38" cy="38" r="34" stroke-dasharray="214" stroke-dashoffset="0"/>
+        </svg>
+      </div>
+    </div>
+    <div class="pb2">
+      <div class="strow">
+        <div class="stat"><div class="v" id="cnt-done">0</div><div class="l">fertig</div></div>
+        <div class="stat"><div class="v" id="cnt-left">108</div><div class="l">offen</div></div>
+        <div class="stat"><div class="v" id="cnt-pct">0%</div><div class="l">Weg</div></div>
+      </div>
+      <button class="bow-btn" id="main-btn" onclick="nextBow()">Verbeuge mich — weiter</button>
+      <button class="back-btn" onclick="prevBow()">Zurück</button>
+    </div>
+  </div>
+
+  <!-- MEDITATION -->
+  <div class="screen med-screen" id="screen-meditation">
+    <div class="med-lbl">Reflexion des Augenblicks</div>
+    <div class="med-num" id="med-num">Verbeugung 1</div>
+    <div class="med-text" id="med-text"></div>
+    <div class="med-div"></div>
+    <div class="med-btns">
+      <button class="med-new" onclick="drawSingleBow()">Neue Reflexion ziehen</button>
+      <button class="med-back" onclick="openSettings()">Zurück</button>
+    </div>
+  </div>
+
+  <!-- DONE -->
+  <div class="screen done-s" id="screen-done">
+    <div class="done-lotus">☸</div>
+    <div class="done-title">Praxis vollendet</div>
+    <div class="done-div"></div>
+    <div class="done-verse">Mögen diese Verbeugungen die Samen für Weisheit und Freiheit für alle Wesen werden.</div>
+    <div class="done-btns">
+      <button class="donate-btn" onclick="showScreen('screen-info')">Unterstütze Vien Lac</button>
+      <button class="restart-btn" onclick="resetApp()">Neue Praxis</button>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="screen info-s" id="screen-info">
+    <div class="ih">
+      <h2>Über &amp; Spenden</h2>
+      <button class="close-btn" onclick="openSettings()">✕</button>
+    </div>
+    <div class="ib2">
+
+      <div class="ic">
+        <div class="ict">Herkunft der Texte</div>
+        <p>Die 108 Reflexionen entstammen der koreanischen Zen-Tradition (선, Seon). Die Texte wurden im Rahmen des <em>Temple Stay</em>-Programms des Jogye-Ordens entwickelt – dem größten buddhistischen Orden Koreas. Sie sind keine Schöpfung einer einzelnen Person, sondern Ausdruck einer lebendigen kollektiven Tradition.</p>
+      </div>
+
+      <div class="ic">
+        <div class="ict">Die Praxis</div>
+        <p>Die 108 Verbeugungen verbinden Körper, Atem und Geist. Die Zahl 108 steht im Buddhismus für die weltlichen Begierden, die durch die Verbeugungen verwandelt werden sollen – eine Praxis der Reinigung und des Mitgefühls.</p>
+      </div>
+
+      <div class="dc">
+        <div class="dcl">☸</div>
+        <div class="dct">Kloster Vien Lac</div>
+        <p>Diese App ist kostenlos. Wenn die Praxis dich berührt, freut sich das Retreat-Center <strong>Vien Lac</strong> in Varel über eine freiwillige Spende.</p>
+        <p>Vien Lac ist ein Zentrum der Chan- und Reinen-Land-Schule in der vietnamesischen Rinzai-Tradition, gegründet 2017 an der Nordseeküste.</p>
+        <p><a href="https://vienlac.de" target="_blank">vienlac.de</a></p>
+        <div class="iban-box">
+          <div class="iban-lbl">Spendenkonto</div>
+          <p>Helpibri Vien Lac gUG<br>IBAN: DE91 2826 2673 0110 6104 01<br>BIC: GENODEF1VAR</p>
+        </div>
+        <p class="dcn">Dana – das Geben ohne Gegenleistung – ist eine zentrale Lehre im Buddhismus.</p>
+      </div>
+
+      <div class="ic">
+        <div class="ict">Diese App</div>
+        <p>Zur persönlichen Unterstützung der Praxis erstellt. Die Texte wurden aus einer deutschen Übersetzung des koreanischen Temple-Stay-Programms übernommen und sprachlich überarbeitet.</p>
+      </div>
+
+    </div>
+    <div class="if2">
+      <button class="begin-btn" onclick="openSettings()">Zurück zur Praxis</button>
+    </div>
+  </div>
+
+</div>
+<script>
+const ALL_BOWS = [
+  [1,"Für tiefen Respekt für alles Leben, verbeuge ich mich."],
+  [2,"Für Bescheidenheit und die Befreiung von schlechten Gewohnheiten, verbeuge ich mich."],
+  [3,"Um mich vom egoistischen Verhalten für Eigennutzen zu erlösen, verbeuge ich mich."],
+  [4,"Für die Einsicht, dass du und ich gleichermaßen wertvoll sind, verbeuge ich mich."],
+  [5,"Um die in mir stets entstehende Gier zu verwandeln, verbeuge ich mich."],
+  [6,"Für die Geduld gegenüber der Wut im Geiste, verbeuge ich mich."],
+  [7,"Um auf mein gesamtes Leben mit ganzem Herzen zurückblicken zu können, verbeuge ich mich."],
+  [8,"Um mein wahres Ich zu finden und mein inneres Wachstum zu fördern, verbeuge ich mich."],
+  [9,"Um den verblendeten Verstand loszulassen und Weisheit in mir wachsen zu sehen, verbeuge ich mich."],
+  [10,"Ich bin dankbar, geduldig auf dem schwierigen Weg des Lebens zu gehen, und verbeuge mich."],
+  [11,"Ich bin dankbar, mich vom Unheilsamen zu distanzieren und mich mit dem Heilsamen anzufreunden, und verbeuge mich."],
+  [12,"Um mich bei allen Begegnungen zu bedanken, die mich zu dem gemacht haben, was ich heute bin, verbeuge ich mich."],
+  [13,"Um mich für die grenzenlose Liebe meiner Eltern zu bedanken, verbeuge ich mich."],
+  [14,"Um allen Lehrern zu danken, die mich zur Wahrheit geführt haben, verbeuge ich mich."],
+  [15,"Um meinen Freunden und Weggefährten zu danken, mit denen ich schwierige Zeiten geteilt habe, verbeuge ich mich."],
+  [16,"Um meinen Vorfahren zu danken, denen ich meine Existenz verdanke, verbeuge ich mich."],
+  [17,"Um der unendlichen Gnade der Luft, des Wassers, der Natur und des Universums zu danken, die die Quellen des Lebens sind, verbeuge ich mich."],
+  [18,"Ich betrachte, ob meine maßlose Gier Unglück hervorgerufen hat, und verbeuge mich."],
+  [19,"Ich betrachte, ob meine besitzergreifende Liebe zu jemandem Leiden verursacht hat, und verbeuge mich."],
+  [20,"Ich betrachte, ob ich jemanden durch selbstgerechten Stolz verärgert habe, und verbeuge mich."],
+  [21,"Ich betrachte, ob ich jemandem durch blinde Gier geschadet habe, und verbeuge mich."],
+  [22,"Ich betrachte, ob ich jemanden falsch verstanden habe, und verbeuge mich."],
+  [23,"Ich betrachte, ob ich jemanden verletzt habe, während ich meinen eigenen Willen verfolgte, und verbeuge mich."],
+  [24,"Ich betrachte, ob ich in unnötigem Luxus und Eitelkeit gelebt habe, und verbeuge mich."],
+  [25,"Ich betrachte, ob ich verschwendet habe, was hätte bewahrt werden können, und verbeuge mich."],
+  [26,"Ich betrachte, ob ich unheilsames Verhalten stets rationalisiert habe, und verbeuge mich."],
+  [27,"Ich betrachte, ob ich Versprechen leichtfertig gebrochen habe, und verbeuge mich."],
+  [28,"Ich betrachte, ob ich reuevoll in die Vergangenheit zurückgeschaut habe und mich durch das Festhalten daran gequält habe, und verbeuge mich."],
+  [29,"Ich betrachte, ob mich die Angst vor der Zukunft eingeschränkt hat, und verbeuge mich."],
+  [30,"Ich betrachte, ob ich die Würde eines anderen verletzt habe, um meine eigene zu schützen, und verbeuge mich."],
+  [31,"Ich betrachte, ob ich nur das Negative gesehen und das Positive übersehen habe, und verbeuge mich."],
+  [32,"Ich betrachte, ob ich aus Angst Schwierigkeiten nicht lösen konnte, und verbeuge mich."],
+  [33,"Ich weiß, dass durch aufrichtige Bemühungen alles erreicht werden kann, und verbeuge mich."],
+  [34,"Ich pflege Selbstliebe und betrachte mich wie ein kostbares Juwel, und verbeuge mich."],
+  [35,"Um zu geben, ohne etwas als Gegenleistung zu erwarten, verbeuge ich mich."],
+  [36,"Ich weiß, dass Unglück und Angst kommen und gehen, und verbeuge mich."],
+  [37,"Ich weiß, dass jeder Tag ein schöner Tag ist, erfüllt von guten Menschen und guten Begegnungen, und verbeuge mich."],
+  [38,"Im Wissen, dass man erntet, was man sät, bemühe ich mich, nur gute Samen zu säen, und verbeuge mich."],
+  [39,"Um bescheiden anzunehmen, was gesät wurde, verbeuge ich mich."],
+  [40,"Um stets mein Bestes zu geben, auch wenn es scheinbar unbedeutend ist, verbeuge ich mich."],
+  [41,"Um zufrieden zu sein mit einem Leben aus Fleiß und Ehrlichkeit, verbeuge ich mich."],
+  [42,"Um auch die kleinsten Versprechen einzuhalten, verbeuge ich mich."],
+  [43,"Um stets den Weg der Wahrheit zu gehen, auch angesichts von Tadel und Verachtung, verbeuge ich mich."],
+  [44,"Um als warmherziger Mensch zu leben, ohne die Überzeugungen anderer zu verurteilen, verbeuge ich mich."],
+  [45,"Um im gegenwärtigen Moment zu leben, ohne an Vergangenheit oder Zukunft gebunden zu sein, verbeuge ich mich."],
+  [46,"Für Mitgefühl mit allen fühlenden Wesen, nicht nur mit meiner eigenen Familie, verbeuge ich mich."],
+  [47,"Für ein Herz, das andere mit Wärme umfängt, verbeuge ich mich."],
+  [48,"Um bei der Arbeit stets leidenschaftlich tätig zu sein und nicht aufzuschieben, was getan werden muss, verbeuge ich mich."],
+  [49,"Um das Beste aus jedem Augenblick zu machen, ohne Zeit zu verschwenden, verbeuge ich mich."],
+  [50,"Um ohne Trägheit auf mein Ziel hinzuwirken, verbeuge ich mich."],
+  [51,"Um Fehler ohne Selbstgerechtigkeit einzugestehen, verbeuge ich mich."],
+  [52,"Um Schwierigkeiten nicht aus dem Weg zu gehen, verbeuge ich mich."],
+  [53,"Um mich neuen Herausforderungen zu stellen, anstatt mich auszuruhen, verbeuge ich mich."],
+  [54,"Um meine Fehler sofort einzugestehen, verbeuge ich mich."],
+  [55,"Um offenherzig zu sein und in freudigen Momenten des Lebens von Herzen lachen zu können, verbeuge ich mich."],
+  [56,"Um allen Trost zu spenden, denen ich auf meinem Weg begegne, verbeuge ich mich."],
+  [57,"Um von ganzem Herzen an Gemeinschaften teilzunehmen, die fühlenden Wesen helfen, verbeuge ich mich."],
+  [58,"Um in einer Welt des Chaos klar und in Frieden zu sein, verbeuge ich mich."],
+  [59,"Um in Herausforderungen und Krisen den Weg zur Freude zu finden, verbeuge ich mich."],
+  [60,"Um bei Schwierigkeiten stark und konzentriert auf meine Ziele zu bleiben, verbeuge ich mich."],
+  [61,"Um Aufgaben anzunehmen, so wie sie gegeben sind, verbeuge ich mich."],
+  [62,"Um wahre und vertrauensvolle Freundschaft zu teilen, ohne etwas als Gegenleistung zu erwarten, verbeuge ich mich."],
+  [63,"Um Ungerechtigkeit ohne Ärger anzunehmen und mich selbst zu hinterfragen, verbeuge ich mich."],
+  [64,"Um eine Krankheit als Heilmittel zu betrachten, das mir die Gelegenheit gibt, meine Praxis zu vertiefen, verbeuge ich mich."],
+  [65,"Um dankbar und gütig zu sein, indem ich Hass und Neid loslasse, verbeuge ich mich."],
+  [66,"Um stets in Freude zu leben und nicht in Trostlosigkeit und Einsamkeit zu verharren, verbeuge ich mich."],
+  [67,"Um gelassen und in Frieden zu leben, frei von Unruhe und Angst, verbeuge ich mich."],
+  [68,"Um Krisenmomente mit Mitgefühl zu betrachten, verbeuge ich mich."],
+  [69,"Um unerwartetem Unglück mit Akzeptanz zu begegnen, verbeuge ich mich."],
+  [70,"Durch das Erkennen der Vergänglichkeit von Macht und Reichtum sehe ich deren Bedeutungslosigkeit, leide nicht darunter, und verbeuge mich."],
+  [71,"Um anderen mit einfühlsamen und rücksichtsvollen Taten zu helfen, verbeuge ich mich."],
+  [72,"Um neuen Menschen auf aufrichtige und bedeutsame Weise ohne Vorurteile zu begegnen, verbeuge ich mich."],
+  [73,"Um mit allen in Harmonie zu wirken und niemanden auszuschließen, verbeuge ich mich."],
+  [74,"Um mit allen in Harmonie und Einklang zu leben, verbeuge ich mich."],
+  [75,"Um mir Ruhm für andere zu wünschen, anstatt für mich selbst, verbeuge ich mich."],
+  [76,"Um meine Fähigkeiten und Talente mit denen in Not zu teilen, verbeuge ich mich."],
+  [77,"Um die Zeit zu schätzen, die ich mit einem geliebten Menschen verbracht habe, auch wenn dieser Mensch mich verlassen hat, verbeuge ich mich."],
+  [78,"Um alle Wesen ohne Vorurteile zu sehen, verbeuge ich mich."],
+  [79,"Um verschiedenen Meinungen aufmerksam zuzuhören, verbeuge ich mich."],
+  [80,"Um in Frieden, Harmonie und Rücksicht gegenüber meinen Nächsten zu sein, verbeuge ich mich."],
+  [81,"Um loslassen zu können, wenn die Zeit dafür gekommen ist, verbeuge ich mich."],
+  [82,"Um mein Leben ohne Selbstvorwürfe anzunehmen, verbeuge ich mich."],
+  [83,"Um zu geben, was ich geben kann, wohin ich auch gehe, ohne etwas als Gegenleistung zu erwarten, verbeuge ich mich."],
+  [84,"Um ein Mensch zu werden, der mit warmen Worten Frieden verbreitet, verbeuge ich mich."],
+  [85,"Um unter Druck gelassen zu bleiben, verbeuge ich mich."],
+  [86,"Um bei Auseinandersetzungen ruhig zu bleiben, verbeuge ich mich."],
+  [87,"Um Selbstgerechtigkeit zu meiden und nicht nach Fehlern in anderen zu suchen, verbeuge ich mich."],
+  [88,"Um andere mit Lob zu ermutigen, anstatt mit Tadel, verbeuge ich mich."],
+  [89,"Um in anderen das Gute statt das Schlechte zu suchen und ihnen Erfolg zu wünschen, verbeuge ich mich."],
+  [90,"Ich widme meine Verdienste dem Glück anderer und weiß, dass ihr Leiden auch mein Leiden ist, und verbeuge mich."],
+  [91,"Um das Scheitern eines anderen mitfühlend zu begleiten und dem Erfolg eines anderen aufrichtig zu gratulieren, verbeuge ich mich."],
+  [92,"Mögen alle Kranken von Krankheit befreit sein."],
+  [93,"Mögen alle, die ihren Weg verloren haben, ihn wiederfinden."],
+  [94,"Mögen alle, die in Armut leben, diese überwinden."],
+  [95,"Mögen alle Wesen frei sein von Hunger, Krankheit und Krieg."],
+  [96,"Mögen alle Wesen durch aufrichtige Lehrer in Weisheit wachsen."],
+  [97,"Mögen alle Wesen den richtigen Halt in Arbeit und Gemeinschaft finden."],
+  [98,"Mögen alle Wesen in Geborgenheit und in der Harmonie ihrer Familien leben."],
+  [99,"Mögen alle heilsamen Absichten und heilsamen Bemühungen aller Wesen erfüllt werden."],
+  [100,"Mögen alle Menschen, die Arbeit suchen, einen erfüllenden und heilsamen rechten Lebenserwerb finden."],
+  [101,"Möge die Jugend und alle kommenden Generationen einen Weg zur wahren Glückseligkeit finden."],
+  [102,"Ich spüre die Gnade des Universums in einem einzigen Wassertropfen, und verbeuge mich."],
+  [103,"Ich sehe den Fleiß von Millionen Menschen in einem einzigen Reiskorn, und verbeuge mich."],
+  [104,"Ich überbrücke die dünne Wand zwischen dir und mir und werde zu einem offenherzigen Menschen, und verbeuge mich."],
+  [105,"Ich bin dankbar für das tiefe Glücksgefühl in diesem Augenblick der Verbeugung, und verbeuge mich."],
+  [106,"Für die wahre Natur, die aus der Tiefe des Inneren leuchtet, verbeuge ich mich."],
+  [107,"Für die wahre Natur, die von allen Wesen ausstrahlt, verbeuge ich mich."],
+  [108,"Ich wünsche mir, dass meine 108 Verbeugungen die Samen für Weisheit und Freiheit für alle Wesen werden, und verbeuge mich."]
+];
+
+let state={mode:'full',pace:'manual',gong:false,timerSec:20,startFrom:1,count:18,sequence:[],pos:0,autoTimer:null,autoRemaining:0};
+let audioCtx=null;
+
+function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+
+function playGong(){
+  try{
+    const ctx = getAudioCtx();
+    const now = ctx.currentTime;
+
+    function partial(freq, level, decay, type='sine'){
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(40, freq * 0.985), now + decay);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(level, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + decay + 0.05);
+    }
+
+    partial(174, 0.22, 4.2);
+    partial(261, 0.10, 3.6);
+    partial(348, 0.07, 2.9);
+    partial(522, 0.03, 2.2, 'triangle');
+  }catch(e){}
+}
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+document.querySelectorAll('.pill').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const g=btn.dataset.group;
+    document.querySelectorAll(`.pill[data-group="${g}"]`).forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    if(g==='mode'){
+      state.mode=btn.dataset.val;
+      document.getElementById('count-card').style.display=state.mode==='short'?'block':'none';
+      document.getElementById('start-card').style.display=state.mode==='full'?'block':'none';
+      const hide=state.mode==='single';
+      document.getElementById('pace-card').style.display=hide?'none':'block';
+      document.getElementById('gong-card').style.display=hide?'none':'block';
+      if(hide)document.getElementById('timer-card').style.display='none';
+    }
+    if(g==='pace'){state.pace=btn.dataset.val;document.getElementById('timer-card').style.display=state.pace==='auto'?'block':'none';}
+    if(g==='gong')state.gong=btn.dataset.val==='on';
+  });
+});
+
+document.getElementById('timer-slider').addEventListener('input',function(){state.timerSec=parseInt(this.value);document.getElementById('timer-label').textContent=this.value+'s';});
+document.getElementById('start-slider').addEventListener('input',function(){state.startFrom=parseInt(this.value);document.getElementById('start-label').textContent=this.value;});
+document.getElementById('count-slider').addEventListener('input',function(){state.count=parseInt(this.value);document.getElementById('count-label').textContent=this.value;});
+
+function buildSequence(){if(state.mode==='full')return ALL_BOWS.slice(state.startFrom-1);return shuffle(ALL_BOWS).slice(0,state.count);}
+
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+function drawSingleBow(){
+  const idx=Math.floor(Math.random()*ALL_BOWS.length);
+  const[num,text]=ALL_BOWS[idx];
+  document.getElementById('med-num').textContent='Verbeugung '+num;
+  document.getElementById('med-text').textContent=text;
+}
+
+function startPractice(){
+  if(state.mode==='single'){drawSingleBow();showScreen('screen-meditation');return;}
+  state.sequence=buildSequence();state.pos=0;
+  showScreen('screen-practice');renderBow();
+  if(state.pace==='auto')startAutoTimer();
+}
+
+function renderBow(){
+  const total=state.sequence.length,pos=state.pos,[origNum,text]=state.sequence[pos];
+  document.getElementById('bow-counter').textContent=pos+1;
+  document.getElementById('bow-total-label').textContent='von '+total;
+  document.getElementById('original-num').textContent='Verbeugung '+origNum;
+  const bowTextEl=document.getElementById('bow-text');
+  bowTextEl.classList.remove('fade-in');
+  void bowTextEl.offsetWidth;
+  bowTextEl.textContent=text;
+  bowTextEl.classList.add('fade-in');
+  const pct=Math.round((pos/total)*100);
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('cnt-done').textContent=pos;
+  document.getElementById('cnt-left').textContent=total-pos;
+  document.getElementById('cnt-pct').textContent=pct+'%';
+  document.getElementById('main-btn').textContent=pos===total-1?'Letzte Verbeugung vollenden':'Weiter';
+}
+
+function nextBow(){
+  if(state.gong)playGong();
+  if(state.autoTimer){clearInterval(state.autoTimer);state.autoTimer=null;}
+  if(state.pos>=state.sequence.length-1){finishPractice();return;}
+  state.pos++;renderBow();
+  if(state.pace==='auto')startAutoTimer();
+}
+
+function prevBow(){
+  if(state.autoTimer){clearInterval(state.autoTimer);state.autoTimer=null;}
+  if(state.pos>0){state.pos--;renderBow();}
+  if(state.pace==='auto')startAutoTimer();
+}
+
+function startAutoTimer(){
+  const arc=document.getElementById('ring-arc');
+  document.getElementById('ring-wrap').classList.add('visible');
+  state.autoRemaining=state.timerSec;arc.style.strokeDashoffset='0';
+  const circ=214;
+  state.autoTimer=setInterval(()=>{
+    state.autoRemaining--;
+    arc.style.strokeDashoffset=(circ*(1-state.autoRemaining/state.timerSec)).toString();
+    if(state.autoRemaining<=0){clearInterval(state.autoTimer);state.autoTimer=null;nextBow();}
+  },1000);
+}
+
+function finishPractice(){if(state.autoTimer){clearInterval(state.autoTimer);state.autoTimer=null;}setTimeout(()=>showScreen('screen-done'),300);}
+
+function openSettings(){if(state.autoTimer){clearInterval(state.autoTimer);state.autoTimer=null;}showScreen('screen-settings');}
+
+function resetApp(){state.pos=0;document.getElementById('start-slider').value=1;document.getElementById('start-label').textContent='1';showScreen('screen-settings');}
+</script>
+<script>
+if ('serviceWorker' in navigator && !location.protocol.startsWith('file')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
